@@ -1,79 +1,68 @@
-Publisher Portal Guide
-===
-The [Publisher Portal](http://publish.marketplace.windowsazure.com) is the web site where you can create and manage your offering. This process involves several steps:
+# Publisher Portal Guide
+The [Publisher Portal](http://publish.windowsazure.com) is the tool you will use define and manage your Add-on. Think of it as the CMS for you Add-on.  Using the Publisher Portal you will:
 
-1. Login with a Microsoft account. If you do not have a Microsoft account, [get one](http://go.microsoft.com/fwlink/p/?LinkID=238657).
-2. Tell us about your company e.g. who do we contact for customer support, and where do we send electronic payments.
-3. Create an offering, including registering your RP
-4. Submit the offering for testing and approval
+- Tell us about your company, e.g. who do we contact for customer support, and where do we send electronic payments.
+- Define your Add-on, including price tiers and web service endpoints.
+- Submit your Add-on for testing and approval.
 
-Step 1: Provide company information
----
-When you login for the first time, you will be required to provide information about your company. There are two important items to pay attention to:
+You will use the Publisher Portal to perform each of following tasks below.  These tasks are ordered in the sequence you will perform them.
 
-* **Company Identifier / Resource Provider Namespace**: Pay particular attention to this value. This is a unique identifier of your company, and it is also used when [Windows Azure Management API](http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx) users call your Resource Provider directly. You should use a concise string representing your company. For example, if your company is called Contoso and sells a monitoring service, you should enter "contoso" and not "monitoring" because the latter is too specific.
+- [Provide Your Company Information](#provide-company-information)
+- [Submit Your Seller Application](#submit-your-seller-application)
+- [Define Your Add-on](#define-your-add-on)
+- [Publish Your Add-on To Preview](#publish-your-add-on-to-preview)
+- [Publish Your Add-on To Production](#publish-your-add-on-to-production)
 
-* **Tax Profile Type ** If you are a business, choose _Company_. Otherwise, choose _Individual_.
+##Provide Company Information
 
-![overview](https://raw.github.com/WindowsAzure/azure-resource-provider-sdk/master/docs/images/publishing-portal-10.png)
+Log into the [Publisher Portal](http://publish.windowsazure.com) with your Microsoft account.  If you do not have one you will be directed to create one [here](http://go.microsoft.com/fwlink/p/?LinkID=238657).
 
-Step 2: Create an offering
----
-You are ready to create your first offering. Click the _Publish_ tab:
+    > **Note:** When creating your Publisher Portal login make sure to use an account that is shared among members of your team.  For example:  AzStore-Admin@contoso.com vs. joesmith@contoso.com .
 
-![overview](https://raw.github.com/WindowsAzure/azure-resource-provider-sdk/master/docs/images/publishing-portal-09.png)
 
-and click _Add App Service_:
+When you login for the first time, you will be required to set a _Publisher Namespace_.  This is a unique identifier for your company, and it is also used when [Azure Management API](http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx) users call your Resource Provider directly. You should use a concise string representing your company. For example, if your company is called Clouditrace and sells a monitoring service, you should enter "clouditrace" and not "monitoring" because the later is too specific.
 
-![overview](https://raw.github.com/WindowsAzure/azure-resource-provider-sdk/master/docs/images/publishing-portal-08.png)
+![overview](https://raw.github.com/WindowsAzure/azure-resource-provider-sdk/master/docs/images/publisher-portal-namespace.PNG)
 
-Paste in your [manifest](https://github.com/WindowsAzure/azure-resource-provider-sdk/tree/master/docs/manifest.md):
+##Submit Your Seller Application
+After signing up in the Publisher Portal, click on the _Publishers_ tab.  Your Publisher Namespace will be displayed along with a status of "Needs attention".  
 
-![overview](https://raw.github.com/WindowsAzure/azure-resource-provider-sdk/master/docs/images/publishing-portal-07.png)
+![overview](https://raw.github.com/WindowsAzure/azure-resource-provider-sdk/master/docs/images/publisher-portal-seller-dashboard.PNG)
 
-Click _Contacts_. Information you enter on this page will be shown to users in various places to help them get support:
+Click the pop-out icon to launch the Seller Dashboard.  All Azure Store partners are **required** to submit an application in order to be approved to offer products and services in the Azure Store.  The Seller Dashboard is where you fill in your company details, submit an application to become a seller in Microsoft marketplaces and manage your payout information.  We strongly encourage partners to start this process early in order to prevent delays in onboarding. 
 
-![overview](https://raw.github.com/WindowsAzure/azure-resource-provider-sdk/master/docs/images/publishing-portal-06.png)
+![overview](https://raw.github.com/WindowsAzure/azure-resource-provider-sdk/master/docs/images/seller-dashboard-site.PNG)
 
-Click _Details_, and provide details about your offering:
+For help with the Microsoft Seller Dashboard please see this [FAQ](http://msdn.microsoft.com/en-us/library/jj552463.aspx).
 
-![overview](https://raw.github.com/WindowsAzure/azure-resource-provider-sdk/master/docs/images/publishing-portal-05.png)
+##Define Your Add-on
+Now that you have created a Publisher account and submitted your Seller application, you are ready to create your first _Add-on_.  An _Add-on_ is product or service listing in the Azure Store.  Within the Publisher Portal, click _New_ at the bottom, then _App Service_, _Azure Store_ and _Quick Create_.  Enter the Title of your Add-on and then click _Create New Azure Store Offer_.
 
-* **Resource Type Display Name** is the name of the offering as it will appear to users in our catalog. For example, it could be "Clouditrace" or "ContosoDB".
-* **Short Description** is a brief description of your offering. It cannot exceed **500 characters**.
-* **Long Description** is a long description of your offering. It is **not currently used**.
-* **Resource Type** is your RP's `ResourceType` and is passed to you in [Create Resource](https://github.com/WindowsAzure/azure-resource-provider-sdk/tree/master/docs/api-resource-create.md) requests in the `Resource/Type` node.
-* **Links** You should add as many links in the Links section as possible. We require that you link to an API reference, a quick-start guide, and sample code.
+![overview](https://raw.github.com/WindowsAzure/azure-resource-provider-sdk/master/docs/images/publisher-portal-create-offer.PNG)
 
-![overview](https://raw.github.com/WindowsAzure/azure-resource-provider-sdk/master/docs/images/publishing-portal-04.png)
+Once your new _Add-on_ is created you will be shown the dashboard for your _Add-on_, along with details on next steps.
 
-* **Regions** If you service is deployed in a Windows Azure datacenter, you are required to specify what datacenters are available. Otherwise, leave this field blank.
-* **Logos** You are required to provide three logos, 45x45, 100x100 and 215x215. Please refer to the [brand guide](https://github.com/WindowsAzure/azure-resource-provider-sdk/tree/master/docs/brand-guide.md) for logo requirements.
+![overview](https://raw.github.com/WindowsAzure/azure-resource-provider-sdk/master/docs/images/publisher-portal-offer-next-steps.PNG)
 
-Click _Plans_ to specify free and paid plans for your offering:
+Continue building your new Add-on by following the directions in the Publisher Portal.  You will need to define your Add-on _Service Plans_, Marketing copy, Pricing, Support links, Resource Provider endpoints and Data Centers.
 
-![overview](https://raw.github.com/WindowsAzure/azure-resource-provider-sdk/master/docs/images/publishing-portal-03.png)
 
-* **Name** is the display name of your offering e.g. Free, Nano, Micro, Mega. Free plans are required to be called Free.
-* **Unique Identifier** is the ID of the plan. It will be passed to you in the [Create Resource](https://github.com/WindowsAzure/azure-resource-provider-sdk/tree/master/docs/api-resource-create.md) and [Upgrade Resource](https://github.com/WindowsAzure/azure-resource-provider-sdk/tree/master/docs/api-resource-upgrade.md) requests in the `Resource/Type` node.
-* **Description** is a brief description of the plan. We recommend keeping this field brief, no more than three plain-text sentences.
-* **Retail Price** is the price of your offering in USD. Regardless of what country your offering is available in, you always specify the price in [USD](http://en.wikipedia.org/wiki/United_States_dollar). Windows Azure will automatically price the offering in the local currency if it's available.
-* **Markets** are the countries and regions your offering is available. We recommend choosing _All markets_ to make your service available wherever Windows Azure is available.
+_Service Plans_ are the different price and feature tiers within an _Add-on_.  To create a _Service Plan_, select the _App Services_ tab, select an _Offer_, and select _Plans_ in the top nav.  Then select _Add Plan_ at the bottom to launch _Add a New Plan_ dialog.  Use the tool tips to learn more about configuring _Service Plans_.
 
-![overview](https://raw.github.com/WindowsAzure/azure-resource-provider-sdk/master/docs/images/publishing-portal-02.png)
+![overview](https://raw.github.com/WindowsAzure/azure-resource-provider-sdk/master/docs/images/publisher-portal-add-plan.PNG)
 
-* **Terms of Use** are required. **You cannot enter a URL for Terms of Use**. Please provide plain-text terms without any markup. A privacy URL is also required.
+**Notes on Service Plans:** 
 
-Step 3: Submit your offering
----
+* Free trial plans are not currently supported. **Free plans must be always free.**
+* **Plan Identifier** is the display name of your Add-on e.g. Free, Nano, Micro, Mega. Free plans are required to be called Free. **Plan names should not exceed 50 characters.**
 
-![overview](https://raw.github.com/WindowsAzure/azure-resource-provider-sdk/master/docs/images/publishing-portal-01.png)
+##Publish Your Add-on To Preview
+Once you have filled out all the information for you Add-on in the Publisher Portal AND developed your Resource Provider, you can Publish your Add-on to Preview in order to test the functionality of your Add-on in a test version of the Azure Store. Select your Add-on in the Publisher Portal and go to the _Publish_ section and select _Preview_ at the bottom.  This will publish your Add-on to our staging environment for further testing.  For access to the Azure Store test enviroment, contact the Microsoft PM helping you onboard into the Azure Store.
 
-Click _Status/Review_ and if your offering passes validation checks, click _Submit_.
+![overview](https://raw.github.com/WindowsAzure/azure-resource-provider-sdk/master/docs/images/publisher-portal-publish.png)
 
-Next Steps
----
 
-* Microsoft will work with you to test your offering in staging
-* When your offering passes tests, we will enable it in production
-* You will come back to the _Status/Review_ page and click _Publish_ (not avaialble while an offer is in review) to make the offering available to Windows Azure users.
+##Publish Your Add-on To Production
+Once you have tested your Add-on in the test environment, resolved all issues and are ready for your Add-on to be availble in the live Azure Store, you will Publish to Production.  Select your Add-on in the Publisher Portal and go to the _Publish_ section and select _Publish_ at the bottom.  **This action does not automatically publish your Add-on to the live Store**, but rather it puts your Add-on into a queue to be approved for release in the live Store.  After you select the _Publish_ action, notify your Microsoft PM that your Add-on is published and waiting approval.  Approvals take 1-2 days.
+
+

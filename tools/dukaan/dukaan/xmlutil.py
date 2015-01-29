@@ -116,7 +116,7 @@ def parse_manifest(manifest_path):
 		manifest_content = f.read()
 		errors = []
 		warnings = []
-		manifest_config = {'test': {}, 'prod': {}, 'output_keys':[]}
+		manifest_config = {'test': {}, 'prod': {}, 'output_items':[]}
 		t = get_subtree_from_xml_string(manifest_content)
 
 		test_base_uri_xpath = "./Test/ResourceProviderEndpoint"
@@ -153,9 +153,11 @@ def parse_manifest(manifest_path):
 		else:
 			errors.append("SSO URI for Prod environment is not defined in manifest.")
 
-		output_keys = get_nodes(t, ".//OutputKey/Name")
-		if len(output_keys) == 0:
-			warnings.append("OutputKeys are not defined in the manifest. If your Resource Provider exposes Output Items, please define them in the manifest.")
+		output_items = get_nodes(t, ".//OutputItem/Name")
+		if len(output_items) == 0:
+			warnings.append("OutputItems are not defined in the manifest. If your Resource Provider exposes Output Items, please define them in the manifest.")
+		else:
+			manifest_config['output_items'] = [n.text for n in output_items]
 
 		return errors, warnings, manifest_config
 
@@ -173,7 +175,7 @@ def xml_for_subscription_event(subscription_id, resource_provider, resource_type
 		<Id>%(subscription_id)s</Id>
 		<Created>%(time_created)s</Created>
 	</EntityId>
-	<IsAsync>False</IsAsync>
+	<IsAsync>false</IsAsync>
 	<OperationId>%(etag)s</OperationId>
 	<Properties>
 		<EntityProperty>
@@ -186,7 +188,7 @@ def xml_for_subscription_event(subscription_id, resource_provider, resource_type
 		</EntityProperty>
 		<EntityProperty>
 			<PropertyName>OptIn</PropertyName>
-			<PropertyValue>False</PropertyValue>
+			<PropertyValue>false</PropertyValue>
 		</EntityProperty>
 	</Properties>
 </EntityEvent>
@@ -196,7 +198,7 @@ def xml_for_subscription_event(subscription_id, resource_provider, resource_type
 		'subscription_id': subscription_id,
 		'resource_provider': resource_provider,
 		'event_type': event_type,
-		'time_created': str(datetime.now()),
+		'time_created': str(datetime.now().isoformat()),
 		'etag': etag,
 		'resource_type': resource_type
 	}
